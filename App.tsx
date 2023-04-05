@@ -1,10 +1,15 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import styled from "styled-components/native";
-import { useGetUsersQuery, usersApi } from "./store/api/users.api";
+
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import Test from "./components/Test";
+import "react-native-get-random-values";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { usersApi } from "./src/api/users.api";
+import Main from "./src/screens/Main";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 export default function App() {
   const store = configureStore({
@@ -15,22 +20,15 @@ export default function App() {
       getDefaultMiddleware().concat(usersApi.middleware),
   });
 
+  const Stack = createNativeStackNavigator();
+
   return (
-    <Provider store={store}>
-      <View style={styles.container}>
-        <Test />
-        <Text>Open up App.js to start working on your app!</Text>
-        <StatusBar style="auto" />
-      </View>
-    </Provider>
+    <NavigationContainer>
+      <Provider store={store}>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={Main} />
+        </Stack.Navigator>
+      </Provider>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
