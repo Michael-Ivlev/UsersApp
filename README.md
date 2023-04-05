@@ -1,5 +1,5 @@
 # The Users Library
-<img src="https://i.imgur.com/K289e42.jpg"  width="30%" height="30%">
+<img src="https://i.imgur.com/YE63OPq.jpg"  width="30%" height="30%">
 
 Welcome to The Users Library project! This is a React Native app for IOS and Android that fetches data from an external API and displays it in a user-friendly way. The app allows you to browse all the people available in the API and provides a convenient interface for adding and deleting users.
 
