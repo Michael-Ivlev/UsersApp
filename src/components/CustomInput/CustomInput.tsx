@@ -2,12 +2,10 @@ import React, { Text, View } from "react-native";
 import {
   Control,
   Controller,
-  FieldErrors,
   FieldValues,
   RegisterOptions,
 } from "react-hook-form";
-import { Input } from "native-base";
-import { isEmpty, isUndefined } from "lodash";
+import { FormControl, Input } from "native-base";
 
 type Props = {
   control: Control<FieldValues, any>;
@@ -18,7 +16,8 @@ type Props = {
 
 const CustomInput = ({ control, name, rules, errorMessage }: Props) => {
   return (
-    <View>
+    <FormControl isInvalid={errorMessage !== "undefined"}>
+      <FormControl.Label>{name.toUpperCase()}</FormControl.Label>
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
@@ -33,8 +32,8 @@ const CustomInput = ({ control, name, rules, errorMessage }: Props) => {
         rules={rules}
         defaultValue=""
       />
-      {errorMessage !== "undefined" && <Text>{errorMessage}</Text>}
-    </View>
+      <FormControl.ErrorMessage>{errorMessage}</FormControl.ErrorMessage>
+    </FormControl>
   );
 };
 

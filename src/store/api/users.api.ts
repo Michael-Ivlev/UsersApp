@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ApiResponse } from "../types/api.type";
-import { addUser, initialUsers } from "./reducers/userSlice.reducer";
+import { ApiResponse } from "../../types/api.type";
+import { initialUsers } from "../reducers/userSlice.reducer";
 
 const API_URL = "https://randomuser.me/api";
 

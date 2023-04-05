@@ -1,28 +1,23 @@
-import {
-  Box,
-  FormControl,
-  Text,
-  WarningOutlineIcon,
-  Button,
-} from "native-base";
-import React, { TextInput } from "react-native";
-import { View } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { Button, useToast, ScrollView } from "native-base";
+import React from "react-native";
+import { useDispatch } from "react-redux";
 import styled from "styled-components/native";
-import { RootState } from "../store/store";
-import { useForm, FormProvider, Controller } from "react-hook-form";
-import CustomInput from "../components/Input/Input";
-import { addUser } from "../api/reducers/userSlice.reducer";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import CustomInput from "../components/CustomInput/CustomInput";
+import { addUser } from "../store/reducers/userSlice.reducer";
+import "react-native-get-random-values";
+import { nanoid } from "nanoid";
 
-const AddUser = ({ navigation }: Props) => {
+const AddUser = () => {
   const dispatch = useDispatch();
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm();
+  const toast = useToast();
 
-  const onSubmit = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
     dispatch(
       addUser({
         title: data.title,
@@ -34,10 +29,15 @@ const AddUser = ({ navigation }: Props) => {
           city: data.city,
           street: data.street,
         },
-        id: "string",
+        id: nanoid(),
         imageUrl: "https://randomuser.me/api/portraits/med/men/79.jpg",
       })
     );
+    toast.show({
+      description: "User added successfully",
+      placement: "top",
+      variant: "solid",
+    });
   };
 
   const textInputRules = (name: string) => ({
@@ -104,13 +104,13 @@ const AddUser = ({ navigation }: Props) => {
         rules={textInputRules("street")}
         errorMessage={String(errors.street?.message)}
       />
-      <Button onPress={handleSubmit(onSubmit)}>Submit</Button>
+      <Button onPress={handleSubmit(onSubmit)} colorScheme="green">
+        Add User
+      </Button>
     </Container>
   );
 };
 
-const Container = styled(Box)`
-  flex: 1;
-`;
+const Container = styled(ScrollView)``;
 
 export default AddUser;

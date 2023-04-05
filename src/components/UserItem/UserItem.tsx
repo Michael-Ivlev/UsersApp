@@ -1,8 +1,6 @@
-import { Button, HStack } from "native-base";
-import React, { ImageSourcePropType, View } from "react-native";
-import { useDispatch } from "react-redux";
+import { Box, HStack, Text } from "native-base";
+import React from "react-native";
 import styled from "styled-components/native";
-import { removeUser } from "../../api/reducers/userSlice.reducer";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 type Props = {
@@ -17,6 +15,7 @@ type Props = {
   };
   id: string;
   imageUrl: string;
+  onPress: (id: string) => void;
 };
 
 const UserItem = ({
@@ -27,34 +26,39 @@ const UserItem = ({
   location,
   id,
   imageUrl,
+  onPress,
 }: Props) => {
-  const dispatch = useDispatch();
   return (
-    <Container space={2}>
-      <Button onPress={() => dispatch(removeUser(id))}>
-        <MaterialCommunityIcons name="delete-off" size={24} color="red" />
-      </Button>
-      <Image source={{ uri: imageUrl }} />
-      <UserInfoContainer>
-        <Text>{`${title} ${firstName} ${lastName}`}</Text>
-        <Text>{email}</Text>
-        <Text>{id}</Text>
-      </UserInfoContainer>
+    <Container>
+      <MaterialCommunityIcons
+        name="delete-off"
+        size={24}
+        color="red"
+        onPress={() => onPress(id)}
+      />
+      {imageUrl && <Image source={{ uri: imageUrl }} />}
+      <TextContainer>
+        <Text>{`Name: ${title} ${firstName} ${lastName}`}</Text>
+        <Text>{`Email: ${email}`}</Text>
+        <Text>{`Adress: ${location.street} ${location.city} ${location.country}`}</Text>
+        <Text>{`Id: ${id}`}</Text>
+      </TextContainer>
     </Container>
   );
 };
 
-const Container = styled(HStack)`
-  border: 3px solid black;
+const Container = styled.View`
+  border: 3px solid rgb(221, 221, 221);
+  flex-direction: row;
   align-items: center;
+  width: 100%;
 `;
 
-const UserInfoContainer = styled.View`
+const TextContainer = styled.View`
   margin-left: 5px;
   flex-direction: column;
+  max-width: 250px;
 `;
-
-const Text = styled.Text``;
 
 const Image = styled.Image`
   width: 100px;

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { assign, pick, pullAt } from "lodash";
+import { pullAt } from "lodash";
 
 interface userType {
   title: string;
