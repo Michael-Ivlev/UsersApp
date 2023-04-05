@@ -1,4 +1,12 @@
-import { Button, FlatList, Icon, Modal, Spinner, Text } from "native-base";
+import {
+  Button,
+  FlatList,
+  Icon,
+  Input,
+  Modal,
+  Spinner,
+  Text,
+} from "native-base";
 import React from "react-native";
 import styled from "styled-components/native";
 import { useGetUsersQuery } from "../store/api/users.api";
@@ -22,6 +30,11 @@ const Main = ({ navigation }: Props) => {
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [currentId, setCurrentId] = useState("");
+  const [searchText, setSearchText] = useState("");
+
+  const filteredUsers = users.filter((user) =>
+    user.firstName.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   const handleDeleteClick = (id: string) => {
     setShowModal(true);
@@ -69,9 +82,16 @@ const Main = ({ navigation }: Props) => {
             icon={<Icon color="white" as={AntDesign} name="plus" size="md" />}
             onPress={() => navigation.navigate("AddUser")}
           />
+          <Input
+            colorScheme={"blueGray"}
+            placeholder="Search by first name..."
+            size="xl"
+            value={searchText}
+            onChangeText={setSearchText}
+          ></Input>
           <FlatList
             style={{ width: "100%" }}
-            data={users}
+            data={filteredUsers}
             renderItem={({ item }) => (
               <UserItem {...item} onPress={() => handleDeleteClick(item.id)} />
             )}
