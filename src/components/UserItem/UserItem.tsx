@@ -25,22 +25,30 @@ const UserItem = ({
   imageUrl,
 }: Props) => (
   <Container>
-    <Text>{title}</Text>
-    <Text>{firstName}</Text>
-    <Text>{lastName}</Text>
-    <Text>{email}</Text>
-    <Text>{id}</Text>
     <Image source={{ uri: imageUrl }} />
+    <UserInfoContainer>
+      <Text>{title}</Text>
+      <Text>{firstName}</Text>
+      <Text>{lastName}</Text>
+      <Text>{id}</Text>
+    </UserInfoContainer>
   </Container>
 );
 
-const Container = styled.View``;
+const Container = styled.View`
+  border: 3px solid black;
+  flex-direction: row;
+`;
+
+const UserInfoContainer = styled.View`
+  flex-direction: column;
+`;
 
 const Text = styled.Text``;
 
 const Image = styled.Image`
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
 `;
 
 export default UserItem;
