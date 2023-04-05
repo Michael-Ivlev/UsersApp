@@ -111,6 +111,8 @@ const AddUser = () => {
   );
 };
 
-const Container = styled(ScrollView)``;
+const Container = styled(ScrollView)`
+  padding: 30px;
+`;
 
 export default AddUser;
